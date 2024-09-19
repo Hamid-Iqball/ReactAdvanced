@@ -33,13 +33,13 @@ useEffect(function(){
             Post title
         </h1>
         {/* {error ? <Error>{error} </Error>:  */}
-        <ul className="from-neutral-600 bg-orange-300 grid grid-cols-2 items-start ">
+        <ul className="from-neutral-600 bg-orange-300 grid grid-cols-2 items-start">
            {posts?.slice(0,10).map((post, index) => (
             <>
             <div className="flex">
             <li key={post.index} className="border my-2 p-2 mx-2 bg-orange-300 rounded-md">{post.title} {showDescription[index] &&  
                 <p className="p-2 bg-orange-200"> {post.body}</p>}
-            <button onClick={()=>handleChange(index)} className="ml-2 border-2 p-1 border-orange-950 rounded-md ">{showDescription[index] ? "Hide" : "Show"} </button>
+            <button onClick={()=>handleChange(index)} className="ml-2 border-2 p-1 border-orange-950 rounded-md">{showDescription[index] ? "Hide" : "Show"} </button>
             </li>
             </div>
             </> 
