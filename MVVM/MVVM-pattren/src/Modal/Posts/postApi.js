@@ -5,7 +5,15 @@ export const postApi ={
    return axiousInstance.request({
     method:"GET",
     url:'posts'
-   })
+    })},
+
+    deletePost: (id)=>{
+        return axiousInstance.request({
+            method:"DELETE",
+            url:"posts/1",
+            id:id
+        })
     }
+
 
     }
