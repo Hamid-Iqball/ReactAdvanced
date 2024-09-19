@@ -1,9 +1,9 @@
 import { usePost } from "../ViewModal/PostViewModal/userServices"
-import useStore from "../ViewModal/Store/store"
+// import useStore from "../ViewModal/Store/store"
 
 
 function Post({Post}) {
-const {deletePost} = useStore()
+const {deletePost} = usePost()
   return (
 <div className="text-yellow-900 p-4 border-2 border-yellow-800 rounded-md">
 <h2 className="font-semibold text-xl mb-2 uppercase">{Post.title}</h2>
