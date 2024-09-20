@@ -11,7 +11,7 @@ import {
   Checkbox,
 } from "@material-tailwind/react";
  
-export function DialogWithForm({open,  handleOpen, title, description, inputs=[], submitButton}) {
+export function DialogWithForm({open,  handleOpen,size,  title, description, inputs=[], submitButton}) {
  
  
  
@@ -19,7 +19,7 @@ export function DialogWithForm({open,  handleOpen, title, description, inputs=[]
     <>
       
       <Dialog
-        size="xs"
+        size={size}
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
@@ -37,20 +37,15 @@ export function DialogWithForm({open,  handleOpen, title, description, inputs=[]
               {description}
             </Typography>
         {
-            inputs.map(({label,type},index)=>{
+            inputs.map(({label,type},index)=>(
                 <div key={index}>
                 <Typography className="-mb-2" variant="h6">
                   {label}
                 </Typography>
-                <Input label={type} size="lg" />
-                </div>
-            })
+                <Input label={type} size="sm" />
+                </div>)
+            )
         }
-
-            <Typography className="-mb-2" variant="h6">
-              Your Password
-            </Typography>
-            <Input label="Password" size="lg" />
             <div className="-ml-2.5 -mt-3">
               <Checkbox label="Remember Me" />
             </div>
