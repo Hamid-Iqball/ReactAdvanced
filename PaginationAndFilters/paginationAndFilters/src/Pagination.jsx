@@ -14,7 +14,7 @@ try {
     const products = await res.data.products;
     // console.log(products)
     setProducts(products)
-} catch (error) {
+    } catch (error) {
    console.log(error)
 }
 }
@@ -22,8 +22,8 @@ fetchProducts()
     },[])
 
     function selectPageHandler(selectedPage){
-        if(selectedPage>=1 && selectedPage<=products.length/5 && !selectedPage !==page)
-    setPage(selectedPage)
+        if(selectedPage>=1 && selectedPage<=products.length/5 && selectedPage!==page)
+         setPage(selectedPage)
     }
   
   return (
