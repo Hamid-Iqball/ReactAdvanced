@@ -55,13 +55,13 @@ fetchProducts()
     <div >
     {sortedProduct.map((product)=><Product product={product} key={product.id}/>)}
     {products.length>0 && <div className=" flex justify-center items-end gap-2 text-center text-2xl">
-        <button className="bg-orange-700 text-white p-1 px-4 rounded-sm"  onClick={()=>selectPageHandler(page-1)}>Prev</button>
+        <button className="bg-orange-700 text-white p-1 px-4 rounded-sm"  onClick={()=>selectPageHandler(page-1)} disabled={page===1}>Prev</button>
         {
             [...Array(products.length/productsPerPage)].map((_,index)=>{
                 return <span className="cursor-pointer" key={index} onClick={()=>selectPageHandler(index+1)}> {index+1}</span>
             })
         }
-        {page<products.length && <button className="bg-orange-700 text-white p-1 px-4 rounded-sm"  onClick={()=>selectPageHandler(page+1)} >Next</button>}
+        {page<products.length && <button className="bg-orange-700 text-white p-1 px-4 rounded-sm"  onClick={()=>selectPageHandler(page+1)} disabled={page===products.length/productsPerPage }>Next</button>}
     </div>}
     </div>
         </div>
