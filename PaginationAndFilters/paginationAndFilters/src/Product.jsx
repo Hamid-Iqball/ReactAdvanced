@@ -9,6 +9,7 @@ function Product({product}) {
      <span className='font-bold border border-orange-800 px-1'>{product.id}</span>
         </div>
     <p>{product.description}</p>
+    <strong className='text-orange-700'>Price: ${product.price}</strong>
     </div>
 
     </>
