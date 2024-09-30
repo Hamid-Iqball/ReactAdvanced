@@ -3,9 +3,8 @@ import { useStore } from './Store';
 
 function Posts() {
     const { posts, fetchPosts, deletePost, addName, updateName } = useStore();
-    const [name, setName] = useState(''); 
-    const [editId, setEditId] = useState(null); 
-    const [editName, setEditName] = useState(''); 
+    const [name, setName] = useState('');
+    const [editId, setEditId] = useState(null); // State to track the ID of the post being edited
 
     useEffect(() => {
         fetchPosts();
@@ -23,7 +22,14 @@ function Posts() {
         e.preventDefault();
         if (name.trim()) {
             try {
-                addName({ name });
+                if (editId) {
+                   
+                    await updateName(name, editId);
+                    setEditId(null); 
+                } else {
+                  
+                    addName({ name });
+                }
                 setName(""); 
             } catch (error) {
                 console.log(error);
@@ -31,28 +37,14 @@ function Posts() {
         }
     }
 
-
-    async function handleEditSubmit(e) {
-        e.preventDefault();
-        if (editName.trim() && editId) {
-            try {
-                await updateName(editName, editId);
-                setEditId(null); 
-                setEditName(""); 
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
-
+  
     function handleEditClick(post) {
-        setEditName(post.name); 
-        setEditId(post.id); 
+        setName(post.name); 
+        setEditId(post.id);
     }
 
     return (
         <div className='max-w-3xl mx-auto'>
-         
             <form onSubmit={handleSubmit}>
                 <div className='p-2 flex gap-6 min-w-full'>
                     <label htmlFor="name" className='text-slate-50 text-2xl font-semibold'>Enter Your Name</label>
@@ -63,47 +55,17 @@ function Posts() {
                         onChange={(e) => setName(e.target.value)}
                     />
                     <button type='submit' className='border border-slate-50 p-1 bg-slate-50 text-slate-900 font-semibold'>
-                        Submit
+                        {editId ? 'Update' : 'Submit'}
                     </button>
                 </div>
             </form>
-
-  
-            {editId !== null && (
-                <form onSubmit={handleEditSubmit} className='mt-4'>
-                    <div className='p-2 flex gap-6 min-w-full'>
-                        <label htmlFor="editName" className='text-slate-50 text-2xl font-semibold'>Edit Name</label>
-                        <input
-                            type="text"
-                            value={editName}
-                            className='px-2 ring ring-slate-50 border-slate-50'
-                            onChange={(e) => setEditName(e.target.value)}
-                        />
-                        <button type='submit' className='border border-slate-50 p-1 bg-slate-50 text-slate-900 font-semibold'>
-                            Update
-                        </button>
-                        <button
-                            type='button'
-                            onClick={() => {
-                                setEditId(null); 
-                                setEditName(""); 
-                            }}
-                            className='border border-red-500 p-1 bg-red-500 text-slate-900 font-semibold'
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-            )}
-
-         
             {posts.map((post) => (
                 <div className='text-slate-50 border border-slate-50 p-4 my-2 grid grid-cols-[40fr,40fr,10fr,10fr] gap-2 items-center' key={post.id}>
                     <h1>{post.name}</h1>
                     <p>Id #: {post.id}</p>
                     <button
                         className='border border-slate-50 p-1 bg-slate-50 text-slate-900 font-semibold'
-                        onClick={() => handleEditClick(post)}
+                        onClick={() => handleEditClick(post)} 
                     >
                         Edit
                     </button>
