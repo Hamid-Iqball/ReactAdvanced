@@ -22,7 +22,10 @@ function Posts() {
       (name.length < 3){
         toast.error("Name must be grater than 3")
         return false
-      } 
+      } else if (! /^[a-zA-Z\s]+$/.test(name)){
+        toast.error("Name must not consist of numbers and special")
+        return false
+      }
 
       return true
     }

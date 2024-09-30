@@ -9,7 +9,7 @@ function App() {
     <Posts/>
   
 <Toaster position='top-right' gutter={12}
-containerStyle={{margin:"10px 80px"}} 
+containerStyle={{margin:"10px , 80px"}} 
 toastOptions={
   {
     success:{
