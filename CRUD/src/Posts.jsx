@@ -2,7 +2,7 @@ import  { useEffect, useState} from 'react'
 import { useStore } from './Store'
 
 function Posts() {
-const {posts , fetchPosts,deletePost,createPost} = useStore()
+const {posts , fetchPosts,deletePost,addName} = useStore()
 const [name,setName] = useState('')
 
 useEffect(function(){
@@ -18,24 +18,27 @@ try {
 }
 }
 
-async function handleSubmitPost(e){
-e.preventDefault();
-
+async function handleSubmit(e){
+e.preventDefault()
+if(name.trim())
 try {
-  await createPost({name})
-console.log('Hamid')
+  addName({name})
+  console.log(name)
+  setName("")
 } catch (error) {
- console.log(error)
+console.log(error)
 }
 }
+
 
 console.log(posts)
   return (
     <div className='max-w-3xl mx-auto'>
-  <form  onSubmit={handleSubmitPost}>
-  <div className='p-2 flex gap-4'>
+  <form onSubmit={handleSubmit} >
+  <div className='p-2 flex gap-6 min-w-full '>
   <label htmlFor="name" id='name' className='text-slate-50 text-2xl font-semibold'>Enter Your Name</label>
   <input type="text" value={name} className='px-2 ring ring-slate-50  border-slate-50' onChange={(e)=>setName(e.target.value)}   />
+  <button type='submit' className='border border-slate-50 p-1 bg-slate-50 text-slate-900 font-semibold'>Submit</button>
   </div>
 </form>
   {posts.map((post)=>

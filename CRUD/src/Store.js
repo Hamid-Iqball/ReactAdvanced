@@ -9,7 +9,7 @@ isError:null,
 fetchPosts:async ()=>{
     set({isLoading:true})
 try {
-    const res = await axios.get('https://jsonplaceholder.typicode.com/users/1')
+    const res = await axios.get('https://jsonplaceholder.typicode.com/users')
     set({posts:res.data,isLoading:false})
 
 } catch(error) {
@@ -23,9 +23,19 @@ deletePost:(id)=>{
     posts:state.posts.filter(post=>post.id!==id)
    }))
 },
-createPost:(newPost)=>{
-set((state)=>[...state.posts,newPost])
+
+
+addName : async (newPost)=>{
+try {
+    const res = await axios.post("https://jsonplaceholder.typicode.com/users" , newPost)
+    set((state)=>({
+        posts:[...state.posts,res.data]
+    }))
+} catch (error) {
+    set({error:error.message})
 }
+}
+  
 
 
 }))
