@@ -82,3 +82,21 @@ function Posts() {
 }
 
 export default Posts;
+
+function validateName(name) {
+    const specialCharsRegex = /^[a-zA-Z0-9 ]+$/; // Allows letters, numbers, and spaces only
+    if (!name.trim()) {
+        toast.error("Name is required");
+        return false;
+    } else if (name.startsWith(' ')) {
+        toast.error("Name must not start with a space");
+        return false;
+    } else if (!specialCharsRegex.test(name)) {
+        toast.error("Name contains special characters");
+        return false;
+    } else if (name.length < 3) {
+        toast.error("Name should be at least 3 characters long");
+        return false;
+    }
+    return true;
+}
