@@ -36,7 +36,7 @@ let isEditMode = mode === 'edit'
            
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient"  fullWidth type="submit" onClick={handleSubmit}>
+            <Button variant="gradient"  fullWidth type="submit" onClick={handleSubmit} >
             {isEditMode?"Edit":"Add"}
             </Button>
          

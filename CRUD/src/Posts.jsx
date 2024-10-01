@@ -9,7 +9,7 @@ function Posts() {
     const [editId, setEditId] = useState(null); 
     const [editName, setEditName] = useState(''); 
     const [open, setOpen] = useState(false);
-    const [mode, setMode] = useState('add'); // Mode state to switch between add and edit
+    const [mode, setMode] = useState('add'); 
 
     const handleOpen = () => setOpen((cur) => !cur);
 
@@ -56,14 +56,14 @@ function Posts() {
                 toast.error("Couldn't add name successfully");
             }
         }
-        handleOpen(); // Close modal after submit
+        handleOpen(); 
     }
 
     function handleEditClick(post) {
         setEditName(post.name);
         setEditId(post.id);
-        setMode("edit"); // Switch to edit mode
-        handleOpen(); // Open modal for editing
+        setMode("edit"); 
+        handleOpen();
     }
 
     async function handleEditSubmit(e) {
@@ -79,12 +79,12 @@ function Posts() {
                 toast.error("Could not update the name");
             }
         }
-        handleOpen(); // Close modal after submit
+        handleOpen(); 
         setMode("add")
     }
 
     return (
-        <div className='max-w-3xl mx-auto'>
+        <div className='max-w-3xl mx-auto '>
            
             <DialogWithForm 
                 mode={mode} 
@@ -95,23 +95,22 @@ function Posts() {
                 handleSubmit={mode === 'add' ? handleSubmit : handleEditSubmit} 
             />
 
-            {/* Render post list */}
+        
             {posts.map((post) => (
-                <div className='text-slate-50 border border-slate-50 p-4 my-2 grid grid-cols-[40fr,40fr,10fr,10fr] gap-2 items-center' key={post.id}>
+                <div className='text-slate-50 border border-gray-900 p-4 my-2 grid grid-cols-[40fr,40fr,10fr,10fr] gap-2 items-center ' key={post.id}>
                     <h1>{post.name}</h1>
                     <p>Id #: {post.id}</p>
-                    
-                    {/* Edit Button - open modal in edit mode */}
+              
                     <button
-                        className='border border-slate-50 p-1 bg-slate-50 text-slate-900 font-semibold'
+                        className='border border-gray-900 p-1 bg-slate-50 text-slate-900 font-semibold'
                         onClick={() => handleEditClick(post)}
                     >
                         Edit
                     </button>
 
-                    {/* Delete Button */}
+               
                     <button
-                        className='border border-slate-50 p-1 bg-slate-50 text-slate-900 font-semibold'
+                        className='border border-gray-900 p-1 bg-slate-50 text-slate-900 font-semibold'
                         onClick={() => handleDelete(post.id)}
                     >
                         Delete
