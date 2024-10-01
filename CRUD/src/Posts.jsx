@@ -68,6 +68,7 @@ function Posts() {
             }
           }
         }
+        handleOpen()
     }
 
     function handleEditClick(post) {
@@ -92,7 +93,7 @@ function Posts() {
 
     return (
         <div className='max-w-3xl mx-auto'>
-            <DialogWithForm name='Add Name' handleOpen={handleOpen} open={open} handleSubmit={handleSubmit}/>
+            <DialogWithForm name='Add Name' handleOpen={handleOpen} open={open} value={name} setName={setName} handleSubmit={handleSubmit}/>
             {/* <form onSubmit={handleSubmit}>
 
             <div className='p-2 flex gap-6 min-w-full'>

@@ -12,7 +12,7 @@ import {
 
 } from "@material-tailwind/react";
  
-export function DialogWithForm({name, handleOpen, open , handleSubmit}) {
+export function DialogWithForm({name,handleOpen, open , handleSubmit,value,setName}) {
 
  
   return (
@@ -28,19 +28,17 @@ export function DialogWithForm({name, handleOpen, open , handleSubmit}) {
         <Card className="mx-auto w-full max-w-[24rem]">
           <CardBody className="flex flex-col gap-4">
             <Typography variant="h4" color="blue-gray">
-        {name}
+          {name}
             </Typography>
-   
-          
             <Typography className="-mb-2" variant="h6">
             Enter your {name}
             </Typography>
-            <Input label="name" size="lg" type="text" />
+            <Input label="name" size="lg" type="text" value={value} onChange={(e)=>setName(e.target.value)} />
            
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={handleOpen} fullWidth>
-              Sign In
+            <Button variant="gradient"  fullWidth type="submit" onClick={handleSubmit}>
+            {name}
             </Button>
          
           </CardFooter>
