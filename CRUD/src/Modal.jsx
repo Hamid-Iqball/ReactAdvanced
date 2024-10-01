@@ -4,7 +4,6 @@ import {
   Button,
   Dialog,
   Card,
-
   CardBody,
   CardFooter,
   Typography,
@@ -12,12 +11,12 @@ import {
 
 } from "@material-tailwind/react";
  
-export function DialogWithForm({name,handleOpen, open , handleSubmit,value,setName}) {
-
+export function DialogWithForm({mode, handleOpen, open , handleSubmit,value,setName}) {
+let isEditMode = mode === 'edit'
  
   return (
     <>
-      <Button onClick={handleOpen}>{name}</Button>
+      <Button onClick={handleOpen}>{isEditMode? "Edit ": "Add Name"}</Button>
       <Dialog
         size="xs"
         open={open}
@@ -28,17 +27,17 @@ export function DialogWithForm({name,handleOpen, open , handleSubmit,value,setNa
         <Card className="mx-auto w-full max-w-[24rem]">
           <CardBody className="flex flex-col gap-4">
             <Typography variant="h4" color="blue-gray">
-          {name}
+        {isEditMode ? "Edit Name" :"Add Name"}
             </Typography>
             <Typography className="-mb-2" variant="h6">
-            Enter your {name}
+            Enter your Name
             </Typography>
             <Input label="name" size="lg" type="text" value={value} onChange={(e)=>setName(e.target.value)} />
            
           </CardBody>
           <CardFooter className="pt-0">
             <Button variant="gradient"  fullWidth type="submit" onClick={handleSubmit}>
-            {name}
+            {isEditMode?"Edit":"Add"}
             </Button>
          
           </CardFooter>

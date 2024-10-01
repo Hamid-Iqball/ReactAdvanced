@@ -3,41 +3,32 @@ import { useStore } from './Store';
 import toast from 'react-hot-toast';
 import { DialogWithForm } from './Modal';
 
-// import AddForm from './addForm';
-
-
-
-
 function Posts() {
     const { posts, fetchPosts, deletePost, addName, updateName } = useStore();
     const [name, setName] = useState(''); 
     const [editId, setEditId] = useState(null); 
     const [editName, setEditName] = useState(''); 
     const [open, setOpen] = useState(false);
+    const [mode, setMode] = useState('add'); // Mode state to switch between add and edit
+
     const handleOpen = () => setOpen((cur) => !cur);
-  
 
-    function validateName(name){
-      if(name.startsWith(" ")){
-        toast.error("Name must start with a letter")
-        return false
-      } else if 
-      (!name.length > 0){
-        toast.error("Name is required")
-        return false
-      }
-       else if 
-      (name.length < 3){
-        toast.error("Name must be grater than 3")
-        return false
-      } else if (! /^[a-zA-Z\s]+$/.test(name)){
-        toast.error("Name must not consist of numbers and special")
-        return false
-      }
-
-      return true
+    function validateName(name) {
+        if (name.startsWith(" ")) {
+            toast.error("Name must start with a letter");
+            return false;
+        } else if (!name.length > 0) {
+            toast.error("Name is required");
+            return false;
+        } else if (name.length < 3) {
+            toast.error("Name must be greater than 3 characters");
+            return false;
+        } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+            toast.error("Name must not consist of numbers or special characters");
+            return false;
+        }
+        return true;
     }
-
 
     useEffect(() => {
         fetchPosts();
@@ -46,34 +37,33 @@ function Posts() {
     async function handleDelete(id) {
         try {
             await deletePost(id);
-            toast.success("Name Deleted succusssfully")
+            toast.success("Name deleted successfully");
         } catch (error) {
-           toast.error("Could not delete Name")
-           console.log(error)
+            toast.error("Could not delete Name");
+            console.log(error);
         }
     }
 
     async function handleSubmit(e) {
         e.preventDefault();
-        if(validateName(name)){
-
-          if (name.trim()) {
+        if (validateName(name)) {
             try {
-              addName({ name });
-              setName(""); 
-              toast.success("Name added successfully")
+                await addName({ name });
+                setName(""); 
+                toast.success("Name added successfully");
             } catch (error) {
-              console.log(error);
-              toast.error("Couldn't add name successfully")
+                console.log(error);
+                toast.error("Couldn't add name successfully");
             }
-          }
         }
-        handleOpen()
+        handleOpen(); // Close modal after submit
     }
 
     function handleEditClick(post) {
-        setEditName(post.name); 
-        setEditId(post.id); 
+        setEditName(post.name);
+        setEditId(post.id);
+        setMode("edit"); // Switch to edit mode
+        handleOpen(); // Open modal for editing
     }
 
     async function handleEditSubmit(e) {
@@ -83,73 +73,43 @@ function Posts() {
                 await updateName(editName, editId);
                 setEditId(null); 
                 setEditName(""); 
-                toast.success("Successfully updated name")
+                toast.success("Successfully updated name");
             } catch (error) {
                 console.log(error);
+                toast.error("Could not update the name");
             }
         }
+        handleOpen(); // Close modal after submit
+        setMode("add")
     }
-
 
     return (
         <div className='max-w-3xl mx-auto'>
-            <DialogWithForm name='Add Name' handleOpen={handleOpen} open={open} value={name} setName={setName} handleSubmit={handleSubmit}/>
-            {/* <form onSubmit={handleSubmit}>
+           
+            <DialogWithForm 
+                mode={mode} 
+                handleOpen={handleOpen} 
+                open={open} 
+                value={mode === 'add' ? name : editName} 
+                setName={mode === 'add' ? setName : setEditName} 
+                handleSubmit={mode === 'add' ? handleSubmit : handleEditSubmit} 
+            />
 
-            <div className='p-2 flex gap-6 min-w-full'>
-                    <label htmlFor="name" className='text-slate-50 text-2xl font-semibold'>Enter Your Name</label>
-                    <input
-                        type="text"
-                        value={name}
-                        className='px-2 ring ring-slate-50 border-slate-50'
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    <button type='submit' className='border border-slate-50 p-1 bg-slate-50 text-slate-900 font-semibold'>
-                        Submit
-                    </button>
-                </div>
-                </form> */}
-
-  
-            {editId !== null && (
-                <form onSubmit={handleEditSubmit} className='mt-4'>
-                    <div className='p-2 flex gap-6 min-w-full'>
-                        <label htmlFor="editName" className='text-slate-50 text-2xl font-semibold'>Edit Name</label>
-                        <input
-                            type="text"
-                            value={editName}
-                            className='px-2 ring ring-slate-50 border-slate-50'
-                            onChange={(e) => setEditName(e.target.value)}
-                   
-                        />
-                        <button type='submit' className='border border-slate-50 p-1 bg-slate-50 text-slate-900 font-semibold'>
-                            Update
-                        </button>
-                        <button
-                            type='button'
-                            onClick={() => {
-                                setEditId(null); 
-                                setEditName(""); 
-                            }}
-                            className='border border-red-500 p-1 bg-red-500 text-slate-900 font-semibold'
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-            )}
-
-       
+            {/* Render post list */}
             {posts.map((post) => (
                 <div className='text-slate-50 border border-slate-50 p-4 my-2 grid grid-cols-[40fr,40fr,10fr,10fr] gap-2 items-center' key={post.id}>
                     <h1>{post.name}</h1>
                     <p>Id #: {post.id}</p>
+                    
+                    {/* Edit Button - open modal in edit mode */}
                     <button
                         className='border border-slate-50 p-1 bg-slate-50 text-slate-900 font-semibold'
                         onClick={() => handleEditClick(post)}
                     >
-                       Update
+                        Edit
                     </button>
+
+                    {/* Delete Button */}
                     <button
                         className='border border-slate-50 p-1 bg-slate-50 text-slate-900 font-semibold'
                         onClick={() => handleDelete(post.id)}
