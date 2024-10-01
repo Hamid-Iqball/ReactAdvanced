@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useStore } from './Store';
 import toast from 'react-hot-toast';
-import { DialogWithForm } from './Modal';
-
+import { Modal } from './Modal';
 // import AddForm from './addForm';
-
+import { Input, Typography } from '@material-tailwind/react';
 
 
 
@@ -92,22 +91,19 @@ function Posts() {
 
     return (
         <div className='max-w-3xl mx-auto'>
-            <DialogWithForm name='Add Name' handleOpen={handleOpen} open={open} handleSubmit={handleSubmit}/>
-            {/* <form onSubmit={handleSubmit}>
+            <Modal open={open} handleOpen={handleOpen} handleSubmit={handleSubmit}>
+            <Modal.ModalTrigger>Add</Modal.ModalTrigger>
+            <Modal.ModalContent submit={handleSubmit}>    
+            <Typography variant="h4" color="blue-gray">
+            Add Your 
+             </Typography>
+             <Typography className="-mb-2" variant="h6">
+            Your Name
+            </Typography>
+            <Input label="Name" size="lg" value={name} onChange={(e)=>setName(e.target.value)} />
+            </Modal.ModalContent>
+            </Modal>
 
-            <div className='p-2 flex gap-6 min-w-full'>
-                    <label htmlFor="name" className='text-slate-50 text-2xl font-semibold'>Enter Your Name</label>
-                    <input
-                        type="text"
-                        value={name}
-                        className='px-2 ring ring-slate-50 border-slate-50'
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    <button type='submit' className='border border-slate-50 p-1 bg-slate-50 text-slate-900 font-semibold'>
-                        Submit
-                    </button>
-                </div>
-                </form> */}
 
   
             {editId !== null && (
