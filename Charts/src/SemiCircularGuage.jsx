@@ -1,66 +1,45 @@
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
+import ReactApexChart from 'react-apexcharts';
 
-import Chart from 'react-apexcharts';
-
-const SemiCircularGuage = () => {
-  const options = {
+const ApexChart = () => {
+  const [series] = useState([44,67, 83]);
+  const [options] = useState({
     chart: {
+      height: 350,
       type: 'radialBar',
-      offsetY: 0,
-      sparkline: {
-        enabled: true,
-      },
     },
     plotOptions: {
       radialBar: {
-        // Controls the radial gauge to be half-circle
-        startAngle: -180,
-        endAngle: 0,
-        hollow: {
-          margin: 0,
-          size: '70%',
-          background: 'transparent',
-          position: 'front',
-        },
         dataLabels: {
           name: {
-            fontSize: '24px',
-            color: undefined,
-            offsetY: 50,
+            fontSize: '22px',
           },
           value: {
-            fontSize: '30px',
-            color: '#fff',
-            offsetY: 10,
+            fontSize: '16px',
+          },
+          total: {
+            show: true,
+            label: 'Total',
+            formatter: function () {
+              // This function can return the total or any custom value
+              return 194;
+            },
           },
         },
       },
     },
-    fill: {
-      type: 'gradient',
-      gradient: {
-        shade: 'dark',
-        type: 'horizontal',
-        shadeIntensity: 0.5,
-        gradientToColors: ['#FDD835'],
-        inverseColors: true,
-        opacityFrom: 1,
-        opacityTo: 1,
-        stops: [0, 100],
-      },
-    },
-    stroke: {
-      lineCap: 'round',
-    },
-    labels: ['Score'],
-  };
-
-  const series = [70]; // Set the value for the gauge
+    labels: ['Apples', 'Oranges', 'Bananas', 'Berries'],
+  });
 
   return (
     <div>
-      <Chart options={options} series={series} type="radialBar" height={350} />
+      <div id="chart">
+        <ReactApexChart options={options} series={series} type="radialBar" height={350} />
+      </div>
+      <div id="html-dist"></div>
     </div>
   );
 };
 
-export default SemiCircularGuage;
+export default ApexChart;
